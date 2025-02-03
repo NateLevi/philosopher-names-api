@@ -185,7 +185,7 @@ const philosophers = {
         'majorWorks': 'Man and His Symbols, The Red Book, Psychology of the Unconscious',
         'famousQuotes': 'Who looks outside, dreams; who looks inside, awakes',
         'historicalPeriod': 'Switzerland, 1875-1961'
-}
+    }
 }
 
 app.get('/', (request, response)=>{
@@ -193,12 +193,27 @@ app.get('/', (request, response)=>{
 })
 
 app.get('/api/:name',(request,response)=>{
-    const philosopherName = request.params.name.toLowerCase()
+    let philosopherName = request.params.name.toLowerCase()
 
+    if(philosopherName === 'watts' || philosopherName === 'alanwatts') {
+        philosopherName = 'alan watts'
+    }
+    if(philosopherName === 'buddha') {
+        philosopherName = 'siddhartha gautama'
+    }
+    if(philosopherName === 'laotzu') {
+        philosopherName = 'lao tzu'
+    }
+    if(philosopherName === 'suntzu') {
+        philosopherName = 'sun tzu'
+    }
+    if(philosopherName === 'marcusaurelius') {
+        philosopherName = 'marcus aurelius'
+    }
     if( philosophers[philosopherName] ){
         response.json(philosophers[philosopherName])
     }else{
-        response.json(philosophers['unknown'])
+        response.status(404).json({error: 'Philosopher not found'})
     }
     
 })
