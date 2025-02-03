@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
 const PORT = 8000
+const cors = require('cors')
 
+app.use(cors())
 
 const rappers = {
     '21 savage': {
@@ -38,10 +40,3 @@ app.get('/api/:name',(request,response)=>{
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`The server is now running on port ${PORT}! Betta Go Catch It!`)
 })
-app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).json({
-      error: 'Something went wrong!',
-      message: err.message
-    })
-  })
